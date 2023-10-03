@@ -5,6 +5,9 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
+use Laravel\Passport\Console\ClientCommand;
+use Laravel\Passport\Console\InstallCommand;
+use Laravel\Passport\Console\KeysCommand;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,9 +28,15 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // if (! $this->app->routesAreCached()) {
-        //     Passport::routes();
+        // Passport::routes();
         // }
 
+        /*ADD THIS LINES*/
+        $this->commands([
+            InstallCommand::class,
+            ClientCommand::class,
+            KeysCommand::class,
+        ]);
         Passport::tokensExpireIn(now()->addDays(1));
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));

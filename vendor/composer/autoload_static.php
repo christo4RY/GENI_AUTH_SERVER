@@ -39,6 +39,7 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         'a1cfe24d14977df6878b9bf804af2d1c' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Phpunit/Autoload.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
+        'b93967716309294a14068fe918165fe1' => __DIR__ . '/..' . '/tzsk/otp/src/Helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -57,6 +58,7 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         ),
         'T' => 
         array (
+            'Tzsk\\Otp\\' => 9,
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
             'Tightenco\\Ziggy\\' => 16,
             'Tests\\' => 6,
@@ -214,6 +216,10 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Tzsk\\Otp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tzsk/otp/src',
         ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
@@ -434,8 +440,8 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri-interfaces',
-            1 => __DIR__ . '/..' . '/league/uri',
+            0 => __DIR__ . '/..' . '/league/uri',
+            1 => __DIR__ . '/..' . '/league/uri-interfaces',
         ),
         'League\\OAuth2\\Server\\' => 
         array (
@@ -634,8 +640,10 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
+        'App\\Http\\Requests\\Auth\\RegisterRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/RegisterRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\UserDetail' => __DIR__ . '/../..' . '/app/Models/UserDetail.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -6872,6 +6880,10 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Property' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Property.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
+        'Tzsk\\Otp\\Commands\\OtpPublishCommand' => __DIR__ . '/..' . '/tzsk/otp/src/Commands/OtpPublishCommand.php',
+        'Tzsk\\Otp\\Facades\\Otp' => __DIR__ . '/..' . '/tzsk/otp/src/Facades/Otp.php',
+        'Tzsk\\Otp\\Otp' => __DIR__ . '/..' . '/tzsk/otp/src/Otp.php',
+        'Tzsk\\Otp\\OtpServiceProvider' => __DIR__ . '/..' . '/tzsk/otp/src/OtpServiceProvider.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',

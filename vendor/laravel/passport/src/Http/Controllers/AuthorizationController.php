@@ -49,10 +49,11 @@ class AuthorizationController
      * @param  \Laravel\Passport\Contracts\AuthorizationViewResponse  $response
      * @return void
      */
-    public function __construct(AuthorizationServer $server,
-                                StatefulGuard $guard,
-                                AuthorizationViewResponse $response)
-    {
+    public function __construct(
+        AuthorizationServer $server,
+        StatefulGuard $guard,
+        AuthorizationViewResponse $response
+    ) {
         $this->server = $server;
         $this->guard = $guard;
         $this->response = $response;
@@ -67,23 +68,26 @@ class AuthorizationController
      * @param  \Laravel\Passport\TokenRepository  $tokens
      * @return \Illuminate\Http\Response|\Laravel\Passport\Contracts\AuthorizationViewResponse
      */
-    public function authorize(ServerRequestInterface $psrRequest,
-                              Request $request,
-                              ClientRepository $clients,
-                              TokenRepository $tokens)
-    {
+    public function authorize(
+        ServerRequestInterface $psrRequest,
+        Request $request,
+        ClientRepository $clients,
+        TokenRepository $tokens
+    ) {
         $authRequest = $this->withErrorHandling(function () use ($psrRequest) {
             return $this->server->validateAuthorizationRequest($psrRequest);
         });
 
         if ($this->guard->guest()) {
+
             return $request->get('prompt') === 'none'
-                    ? $this->denyRequest($authRequest)
-                    : $this->promptForLogin($request);
+            ? $this->denyRequest($authRequest)
+            : $this->promptForLogin($request);
         }
 
         if ($request->get('prompt') === 'login' &&
-            ! $request->session()->get('promptedForLogin', false)) {
+        ! $request->session()->get('promptedForLogin', false)) {
+
             $this->guard->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
@@ -98,7 +102,8 @@ class AuthorizationController
         $client = $clients->find($authRequest->getClient()->getIdentifier());
 
         if ($request->get('prompt') !== 'consent' &&
-            ($client->skipsAuthorization() || $this->hasValidToken($tokens, $user, $client, $scopes))) {
+        ($client->skipsAuthorization() || $this->hasValidToken($tokens, $user, $client, $scopes))) {
+
             return $this->approveRequest($authRequest, $user);
         }
 

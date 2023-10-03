@@ -35,6 +35,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
+        return redirect()->intended(RouteServiceProvider::HOME);
 
         $token = $user->createToken('GENI')->accessToken;
         return response()->json([
@@ -45,7 +46,6 @@ class AuthenticatedSessionController extends Controller
             ]
         ]);
 
-        // return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
