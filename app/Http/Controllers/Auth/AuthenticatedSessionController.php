@@ -31,12 +31,12 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
+        // dd(auth()->user());
 
-        $request->session()->regenerate();
+        // $request->session()->regenerate();
 
         $user = auth()->user();
-        return redirect()->intended(RouteServiceProvider::HOME);
-
+        // return redirect()->intended(RouteServiceProvider::HOME);
         $token = $user->createToken('GENI')->accessToken;
         return response()->json([
             'data'=>[
@@ -53,6 +53,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        // dd($request->all());
+        // return
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

@@ -33,6 +33,7 @@ class RegisteredUserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
+        // dd($request->all());
         try {
             $user = User::create([
                 'fullname'=>$request->firstname." ".$request->lastname,

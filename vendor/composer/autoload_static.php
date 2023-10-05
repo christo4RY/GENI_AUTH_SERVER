@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
+class ComposerStaticInit375663b2f4a160386b1c1abb764cb15d
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -391,8 +391,8 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -440,8 +440,8 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri',
-            1 => __DIR__ . '/..' . '/league/uri-interfaces',
+            0 => __DIR__ . '/..' . '/league/uri-interfaces',
+            1 => __DIR__ . '/..' . '/league/uri',
         ),
         'League\\OAuth2\\Server\\' => 
         array (
@@ -642,6 +642,8 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\Auth\\RegisterRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/RegisterRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
+        'App\\Mail\\OtpMail' => __DIR__ . '/../..' . '/app/Mail/OtpMail.php',
+        'App\\Models\\Otp' => __DIR__ . '/../..' . '/app/Models/Otp.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserDetail' => __DIR__ . '/../..' . '/app/Models/UserDetail.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -7248,9 +7250,9 @@ class ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitb66e868d675d38b7ab8d0ffc539ec597::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit375663b2f4a160386b1c1abb764cb15d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit375663b2f4a160386b1c1abb764cb15d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit375663b2f4a160386b1c1abb764cb15d::$classMap;
 
         }, null, ClassLoader::class);
     }

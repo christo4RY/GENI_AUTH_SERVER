@@ -12,7 +12,6 @@ class Client extends Model
     use HasFactory;
     use ResolvesInheritedScopes;
 
-
     /**
      * The database table used by the model.
      *

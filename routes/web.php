@@ -24,26 +24,37 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::get('/check/oauth', function (Request $request) {
     if(Auth::check($request->user())) {
+        $oauth_redirect_uri =$request->oauth_redirect_uri;
+        $redirect_uri =  $request->redirect_uri;
         if(!Client::where('user_id', $request->user()->id)->get()->count()) {
-            Artisan::call('passport:client --user_id='.$request->user()->id.' --name='.str_replace(' ', '_', $request->user()->fullname).' --redirect_uri='.$request->oauth_redirect_uri);
+            Artisan::call('passport:client --user_id='.$request->user()->id.' --name='.str_replace(' ', '_', $request->user()->fullname).' --redirect_uri='.$oauth_redirect_uri);
         }
         $client = Client::where('user_id', $request->user()->id)->latest()->first();
+
         $query = http_build_query([
             'provider'=>'GENI',
             'client_id'=>$client->id,
             'client_secret'=>$client->secret,
         ]);
-        return redirect($request->get('redirect_uri')."?".$query);
+        return redirect($redirect_uri."?".$query);
+
     } else {
+        $request->session()->put('redirect_login_uri', $request->get('redirect_login_uri'));
         return redirect(route('email.verify'));
     }
-});
+})->name('check.oauth');
+
 
 Route::get('/verify-otp', function () {
     return Inertia::render('Auth/Otp');
 })->name('verify.otp');
+
+Route::get('/test', function () {
+    return redirect()->away('http://127.0.0.1:8181');
+});
 
 Route::post('/verify-otp', function (Request $request) {
     $otp = OtpModel::where('otp', $request->otp)->first();
@@ -55,8 +66,11 @@ Route::post('/verify-otp', function (Request $request) {
     }
 
     if(Otp::check($otp->otp, 123456)) {
+        auth()->login($otp->user);
+        $login = $request->session()->pull('redirect_login_uri');
         return response()->json([
             'status'=>200,
+            'redirect_url'=>$login,
             'msg'=>"Validated Successful"
         ]);
     } else {
@@ -65,8 +79,6 @@ Route::post('/verify-otp', function (Request $request) {
             'msg'=>'OTP was invalid'
         ]);
     }
-
-
 })->name('verify.otp');
 
 Route::get('/email/verify', function () {

@@ -15,6 +15,7 @@ const Otp = () => {
         const {data} = await axios.post(route('verify.otp'),form.values)
         if(data.status === 200){
             toast.success(data.msg)
+            location.href = data.redirect_url
             // router.get(route('verify.otp'))
         }else{
             toast.error(data.msg)

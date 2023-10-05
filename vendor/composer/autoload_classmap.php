@@ -33,6 +33,8 @@ return array(
     'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',
     'App\\Http\\Requests\\Auth\\RegisterRequest' => $baseDir . '/app/Http/Requests/Auth/RegisterRequest.php',
     'App\\Http\\Requests\\ProfileUpdateRequest' => $baseDir . '/app/Http/Requests/ProfileUpdateRequest.php',
+    'App\\Mail\\OtpMail' => $baseDir . '/app/Mail/OtpMail.php',
+    'App\\Models\\Otp' => $baseDir . '/app/Models/Otp.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\UserDetail' => $baseDir . '/app/Models/UserDetail.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
