@@ -9,5 +9,5 @@ return [
     /**
      * This value indicates the number of minutes until one OTP will be valid
      */
-    'expiry' => 5,
+    'expiry' => 1,
 ];

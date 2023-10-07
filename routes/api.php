@@ -20,6 +20,7 @@ Route::middleware('auth:api', 'scope:view-user')->group(function () {
             Project::create([
                 'user_id'=>$user->id,
                 'project_name'=>$request->project_name,
+                'project_logo'=>$request->project_logo,
                 'project_url'=>$request->project_url,
             ]);
         }
@@ -28,6 +29,6 @@ Route::middleware('auth:api', 'scope:view-user')->group(function () {
 Route::middleware('auth:api')->group(function () {
     Route::get('/projects', function (Request $request) {
         $projects = Project::where('user_id', auth()->user()->id)->get();
-        return response()->json(['projects'=>$projects]);
+        return response()->json($projects);
     });
 });
