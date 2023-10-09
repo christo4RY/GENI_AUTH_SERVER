@@ -92,6 +92,16 @@ Route::post('/email/verify', function (Request $request) {
             'msg'=>'email not exist!'
         ]);
     }
+
+    auth()->login($user);
+    $login = $request->session()->pull('redirect_login_uri');
+    return response()->json([
+        'status'=>200,
+        'redirect_url'=>$login,
+        'msg'=>"Validated Successful"
+    ]);
+    //otp
+
     $otp = Otp::generate(123456);
     OtpModel::create([
         'user_id'=>$user->id,
