@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 use Laravel\Passport\Console\ClientCommand;
@@ -44,5 +46,6 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensCan([
             "view-user" => "View user information"
         ]);
+
     }
 }

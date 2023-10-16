@@ -28,24 +28,11 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request) : RedirectResponse
     {
         $request->authenticate();
-        // dd(auth()->user());
-
-        // $request->session()->regenerate();
-
-        $user = auth()->user();
-        // return redirect()->intended(RouteServiceProvider::HOME);
-        $token = $user->createToken('GENI')->accessToken;
-        return response()->json([
-            'data'=>[
-                'id'=>$user->id,
-                'token'=>$token,
-                'message'=>'login successful.',
-            ]
-        ]);
-
+        $request->session()->regenerate();
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
@@ -53,8 +40,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        // dd($request->all());
-        // return
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
