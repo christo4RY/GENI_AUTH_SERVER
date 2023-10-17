@@ -1,11 +1,13 @@
 import React from "react";
 import { useForm } from "@mantine/form";
 import { TextInput } from "@mantine/core";
-import { Link, router } from "@inertiajs/react";
+import { Link, router ,usePage } from "@inertiajs/react";
 import { toast } from 'react-toastify';
 import axios from "axios";
 
 const Verify = () => {
+    const { frontend_url } = usePage().props
+
     const form = useForm({
         initialValues: { email: "" },
         validate: {
@@ -14,12 +16,15 @@ const Verify = () => {
     });
 
     const verify = async (e) => {
+        // router.post(route('email.verify'), form.values)
         const { data } = await axios.post(route('email.verify'), form.values)
         if (data.status === 200) {
             toast.success(data.msg)
             location.href = data.redirect_url
             // router.get(route('verify.otp'))
-        } else {
+        } else if (data.status === 301){
+            toast.error(data.msg)
+        }else {
             form.setFieldError('email', data.msg)
         }
     }
@@ -48,12 +53,12 @@ const Verify = () => {
                                 placeholder="email"
                                 {...form.getInputProps('email')}
                             />
-                            <Link
-                                href={route('register')}
+                            <a
+                                href={frontend_url}
                                 className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Create your account?
-                            </Link>
+                            </a>
                             <button className="md:py-2 mt-5 w-full text-white px-5 bg-[#A1C4FF]">click to verify</button>
                         </form>
                     </div>

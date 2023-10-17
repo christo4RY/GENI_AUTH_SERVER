@@ -27,11 +27,13 @@ Route::get('/', function () {
 
 Route::get('/check/oauth', function (Request $request) {
     if(Auth::check($request->user())) {
-        $oauth_redirect_uri =$request->oauth_redirect_uri;
-        $redirect_uri =  $request->redirect_uri;
+        $oauth_redirect_uri =$request->oauth_redirect_uri ?? $request->session()->get('oauth_redirect_uri');
+        $redirect_uri =  $request->redirect_uri ?? $request->session()->get('redirect_login_uri');
+        // dd($oauth_redirect_uri,$redirect_uri);
         if(!Client::where('user_id', $request->user()->id)->get()->count()) {
             Artisan::call('passport:client --user_id='.$request->user()->id.' --name='.str_replace(' ', '_', $request->user()->fullname).' --redirect_uri='.$oauth_redirect_uri);
         }
+        // dd($oauth_redirect_uri,$redirect_uri);
         $client = Client::where('user_id', $request->user()->id)->latest()->first();
 
         $query = http_build_query([
@@ -43,6 +45,7 @@ Route::get('/check/oauth', function (Request $request) {
 
     } else {
         $request->session()->put('redirect_login_uri', $request->get('redirect_login_uri'));
+        $request->session()->put('oauth_redirect_uri', $request->get('oauth_redirect_uri'));
         return redirect(route('email.verify'));
     }
 })->name('check.oauth');
@@ -66,11 +69,12 @@ Route::post('/verify-otp', function (Request $request) {
     }
 
     if(Otp::check($otp->otp, 123456)) {
-        auth()->login($otp->user);
-        $login = $request->session()->pull('redirect_login_uri');
+        // auth()->login($otp->user);
+        Auth::login(User::findOrFail($otp->user->id));
+        // $login = $request->session()->pull('redirect_login_uri');
         return response()->json([
             'status'=>200,
-            'redirect_url'=>$login,
+            'redirect_url'=>"https://secure.lumin.institute/login",
             'msg'=>"Validated Successful"
         ]);
     } else {
@@ -82,7 +86,7 @@ Route::post('/verify-otp', function (Request $request) {
 })->name('verify.otp');
 
 Route::get('/email/verify', function () {
-    return Inertia::render('Auth/Email/Verify');
+    return Inertia::render('Auth/Email/Verify', ['frontend_url'=>env('FRONTEND_URL')]);
 })->name('email.verify');
 Route::post('/email/verify', function (Request $request) {
     $user = User::where('email', $request->email)->first();
@@ -92,13 +96,21 @@ Route::post('/email/verify', function (Request $request) {
             'msg'=>'email not exist!'
         ]);
     }
-
     auth()->login($user);
-    $login = $request->session()->pull('redirect_login_uri');
+    // return redirect('/check/oauth');
+
+    $login = $request->session()->get('redirect_login_uri');
+    if($login) {
+        return response()->json([
+            'status'=>200,
+            'redirect_url'=>$login,
+            'msg'=>"Validated Successful"
+        ]);
+    }
     return response()->json([
-        'status'=>200,
+        'status'=>301,
         'redirect_url'=>$login,
-        'msg'=>"Validated Successful"
+        'msg'=>"Something is wrong"
     ]);
     //otp
 
