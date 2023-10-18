@@ -33,8 +33,8 @@ Route::get('/check/oauth', function (Request $request) {
         if(!Client::where('user_id', $request->user()->id)->get()->count()) {
             Artisan::call('passport:client --user_id='.$request->user()->id.' --name='.str_replace(' ', '_', $request->user()->fullname).' --redirect_uri='.$oauth_redirect_uri);
         }
-        // dd($oauth_redirect_uri,$redirect_uri);
         $client = Client::where('user_id', $request->user()->id)->latest()->first();
+        // dd($oauth_redirect_uri, $redirect_uri, $client);
 
         $query = http_build_query([
             'provider'=>'GENI',

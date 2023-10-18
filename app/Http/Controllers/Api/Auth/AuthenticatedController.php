@@ -19,6 +19,8 @@ class AuthenticatedController extends Controller
             'data'=>[
                 'id'=>$user->id,
                 'token'=>$token,
+                'email'=>$user->email,
+                'username'=>$user->fullname,
                 'message'=>'login successful.',
             ]
         ]);

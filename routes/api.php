@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthenticatedController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use App\Models\User;
 //middleware('auth:api', 'scope:view-user')->
 Route::middleware('guest:api')->group(function () {
     Route::post('/login', [AuthenticatedController::class,'store']);
+    Route::post('/register', RegisterController::class);
     Route::post('forgot-password', ForgotPasswordController::class);
     Route::post('reset-password', ResetPasswordController::class);
 });
