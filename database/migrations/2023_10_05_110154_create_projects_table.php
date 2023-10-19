@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('user_id');
             $table->string('project_name');
             $table->string('project_url');
+            $table->string('project_dashboard_url');
             $table->timestamps();
         });
     }
