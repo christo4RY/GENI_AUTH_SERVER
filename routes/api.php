@@ -41,13 +41,14 @@ Route::middleware('auth:api', 'scope:view-user')->group(function () {
 });
 Route::middleware('auth:api')->group(function () {
     Route::post('change-password', [NewPasswordController::class,'update']);
+    Route::post('/logout', [AuthenticatedController::class,'destroy']);
+    Route::get('/user-profile', [AuthenticatedController::class,'getUserProfile']);
+    Route::patch('/user-profile', [AuthenticatedController::class,'update']);
+
     Route::get('/projects', function (Request $request) {
         $projects = Project::where('user_id', auth()->user()->id)->get();
         return response()->json($projects);
     });
-
-
-    Route::post('/logout', [AuthenticatedController::class,'destroy']);
 });
 Route::post('/gotoproject/{user}', function (User $user, Request $request) {
     $project = Project::where('user_id', $user->id)->where('project_url', $request->project_url)->first();

@@ -20,4 +20,14 @@ class UserDetail extends Model
         'city',
         'address',
     ];
+
+    public function getCityAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function getCountryAttribute($value)
+    {
+        return ucwords($value);
+    }
 }

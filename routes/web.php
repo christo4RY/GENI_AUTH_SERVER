@@ -15,7 +15,7 @@ use Laravel\Passport\Client;
 use Tzsk\Otp\Facades\Otp;
 use App\Models\Otp as OtpModel;
 
-Route::get('/', function () {
+Route::middleware('redirect.frontend')->get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -23,7 +23,6 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
 
 Route::get('/check/oauth', function (Request $request) {
     if(Auth::check($request->user())) {
@@ -54,10 +53,6 @@ Route::get('/check/oauth', function (Request $request) {
 Route::get('/verify-otp', function () {
     return Inertia::render('Auth/Otp');
 })->name('verify.otp');
-
-Route::get('/test', function () {
-    return redirect()->away('http://127.0.0.1:8181');
-});
 
 Route::post('/verify-otp', function (Request $request) {
     $otp = OtpModel::where('otp', $request->otp)->first();
@@ -128,9 +123,9 @@ Route::post('/email/verify', function (Request $request) {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified','redirect.frontend'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'redirect.frontend')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

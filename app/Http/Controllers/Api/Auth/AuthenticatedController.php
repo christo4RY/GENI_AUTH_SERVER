@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Auth\AuthenticateRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +28,33 @@ class AuthenticatedController extends Controller
             ]
         ]);
 
+    }
+
+    public function getUserProfile(Request $request)
+    {
+        return response()->json(['userProfile'=> User::findOrFail($request->user()->id)->with('userdetail')->first()]);
+    }
+
+    public function update(AuthenticateRequest $request)
+    {
+        // dd($request->file('avatar'));
+        $request->user()->update([
+            'fullname'=>$request->firstname." ".$request->lastname,
+            'email'=>$request->email
+        ]);
+
+        UserDetail::where('user_id', $request->user()->id)->first()->update([
+                'firstname'=>$request->firstname,
+                'lastname'=>$request->lastname,
+            'phone'=>$request->phone,
+            'country'=>$request->country,
+            'city'=>$request->city,
+        ]);
+
+        return response()->json([
+            'status'=>true,
+            'message'=>'Profile updated',
+        ]);
     }
 
     public function destroy(Request $request)
