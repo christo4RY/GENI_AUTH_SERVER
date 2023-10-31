@@ -32,7 +32,7 @@ class AuthenticatedController extends Controller
 
     public function getUserProfile(Request $request)
     {
-        return response()->json(['userProfile'=> User::findOrFail($request->user()->id)->with('userdetail')->first()]);
+        return response()->json(['userProfile'=> User::findOrFail($request->user()->id)->load('userdetail')]);
     }
 
     public function update(AuthenticateRequest $request)
